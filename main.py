@@ -15,7 +15,11 @@ class MyHandler(http.server.SimpleHTTPRequestHandler):
         self.wfile.write(b"YK TRICKS INDIA ")
 
 def execute_server():
-    PORT = 4000
+    PORT = int(os.environ.get("PORT", 5000))   # Render auto PORT use korbe
+
+    with socketserver.TCPServer(("", PORT), MyHandler) as httpd:
+        print("Server running at http://0.0.0.0:{}".format(PORT))
+        httpd.serve_forever()
 
     with socketserver.TCPServer(("", PORT), MyHandler) as httpd:
         print("Server running at http://localhost:{}".format(PORT))
@@ -128,3 +132,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
